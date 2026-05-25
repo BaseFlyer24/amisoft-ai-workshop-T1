@@ -35,53 +35,12 @@ class TaskServiceTest {
     }
 
     // ----------------------------------------------------------------------
-    // Tests CEILING — los devs piden a Gemini que los escriba en el hands-on.
-    // En la branch `start` estos tests no existen; se agregan durante el taller.
-    // Lo que sigue son tests de referencia para la branch `final`.
+    // CEILING — los devs escriben aqui los tests de findByStatus en el hands-on.
+    // Pedir a Gemini Code Assist (chat lateral) que sugiera tests, evaluar
+    // criticamente y agregar los que falten:
+    //   - status valido en mayusculas
+    //   - case-insensitive (in_progress)
+    //   - status invalido -> lista vacia
+    //   - null / blank -> lista vacia (sin tocar repository)
     // ----------------------------------------------------------------------
-
-    @Test
-    void findByStatus_withValidUppercaseStatus_returnsMatchingTasks() {
-        Task t = Task.builder().id(1L).title("a").status(TaskStatus.TODO).build();
-        when(repository.findByStatus(TaskStatus.TODO)).thenReturn(List.of(t));
-
-        List<Task> result = service.findByStatus("TODO");
-
-        assertThat(result).hasSize(1);
-        assertThat(result.get(0).getStatus()).isEqualTo(TaskStatus.TODO);
-    }
-
-    @Test
-    void findByStatus_isCaseInsensitive() {
-        Task t = Task.builder().id(1L).title("a").status(TaskStatus.IN_PROGRESS).build();
-        when(repository.findByStatus(TaskStatus.IN_PROGRESS)).thenReturn(List.of(t));
-
-        List<Task> result = service.findByStatus("in_progress");
-
-        assertThat(result).hasSize(1);
-    }
-
-    @Test
-    void findByStatus_withInvalidStatus_returnsEmptyList() {
-        List<Task> result = service.findByStatus("FOO");
-
-        assertThat(result).isEmpty();
-        Mockito.verifyNoInteractions(repository);
-    }
-
-    @Test
-    void findByStatus_withNull_returnsEmptyList() {
-        List<Task> result = service.findByStatus(null);
-
-        assertThat(result).isEmpty();
-        Mockito.verifyNoInteractions(repository);
-    }
-
-    @Test
-    void findByStatus_withBlank_returnsEmptyList() {
-        List<Task> result = service.findByStatus("   ");
-
-        assertThat(result).isEmpty();
-        Mockito.verifyNoInteractions(repository);
-    }
 }
