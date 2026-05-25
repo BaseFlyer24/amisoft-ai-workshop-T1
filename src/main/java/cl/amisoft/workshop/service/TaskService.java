@@ -54,23 +54,19 @@ public class TaskService {
      * @return lista de tareas que coinciden con ese estado
      */
     public List<Task> findByStatus(String status) {
-        // FLOOR — los devs implementan esto en el hands-on.
-        // En la branch `start`, este body queda como:
+        // FLOOR — implementar en el hands-on del T1.
         //
-        //   // TODO: implementar usando Gemini Code Assist (inline-completion).
-        //   // Pista: convertir el string a TaskStatus de forma segura.
-        //   throw new UnsupportedOperationException("Implementar en el hands-on");
+        // Objetivo: devolver las tareas cuyo TaskStatus corresponda al string
+        // recibido. Reglas (ver Javadoc de arriba):
+        //   - status null o blank -> lista vacia
+        //   - status que no calza con ningun TaskStatus -> lista vacia
+        //   - case-insensitive (ej. "in_progress" debe matchear IN_PROGRESS)
+        //   - cuando el status es valido, delegar en taskRepository.findByStatus(...)
         //
-        // Lo que sigue es la version de referencia (branch `final`):
-        if (status == null || status.isBlank()) {
-            return List.of();
-        }
-        try {
-            TaskStatus parsed = TaskStatus.valueOf(status.trim().toUpperCase());
-            return taskRepository.findByStatus(parsed);
-        } catch (IllegalArgumentException e) {
-            return List.of();
-        }
+        // Sugerencia: tipear el nombre del metodo y dejar que Gemini Code Assist
+        // proponga la implementacion via inline-completion. Despues evaluar
+        // criticamente la sugerencia antes de aceptarla.
+        throw new UnsupportedOperationException("findByStatus: implementar en el hands-on");
     }
 
     public List<Task> findByAssignee(String assignee) {
